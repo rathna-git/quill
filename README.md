@@ -12,7 +12,7 @@ Quill is designed as the foundation for advanced features like AI-powered summar
 
 ## 🚀 Live Demo
 
-[https://quill-notes.vercel.app](https://quill-notes.vercel.app) (replace with your actual link)
+[https://quill-notes.vercel.app](https://quill-notes.vercel.app) (Coming Soon!)
 
 ---
 
@@ -133,10 +133,3 @@ Visit `http://localhost:3000` to view the app.
 ## 🧑‍💻 Author
 
 Built with 💙 by Rathna
-
-```
-
----
-
-Would you like this README exported to a `.md` file and added to your current project ZIP or GitHub repo?
-```
