@@ -4,20 +4,6 @@
     <img src="./public/quill_logo.png/" alt="Quill Logo" width="100" height="100" />
 </div>
 
-Quill is a minimalist, responsive note-taking app built with **Next.js 14**, **React**, **TypeScript**, and **Tailwind CSS**, styled with components from **shadcn/ui**. Designed for clean productivity and future AI enhancement.
-
-This is the foundation app for building smarter tools like summarization, voice notes, and study aids in upcoming project phases.
-
-
-Here’s a **fully detailed `README.md`** for your **Quill App**, written to showcase it as a modern, extensible, AI-ready notes platform — perfect for recruiters, collaborators, or portfolio viewers.
-
----
-
-```markdown
-# ✒️ Quill – Smart, Minimalist Notes App
-
-<img src="./quill-logo-100x100.png" alt="Quill Logo" width="100" height="100" />
-
 **Quill** is a modern, minimal note-taking app built with **Next.js 14 App Router**, **React**, **TypeScript**, and **Tailwind CSS**, styled using **shadcn/ui** components. It provides a clean and responsive interface for creating, viewing, and managing notes — fully stored in the browser with `localStorage`.
 
 Quill is designed as the foundation for advanced features like AI-powered summarization, flashcards, voice input, and smart search.
@@ -71,9 +57,7 @@ src/
 ├── styles/            # Tailwind/global CSS
 ├── types/             # TypeScript interfaces and types
 
-````
-
----
+```
 
 ## 📝 Data Model
 
@@ -148,7 +132,7 @@ Visit `http://localhost:3000` to view the app.
 
 ## 🧑‍💻 Author
 
-Built with 💙 by [Your Name](https://github.com/your-username)
+Built with 💙 by Rathna
 
 ```
 
