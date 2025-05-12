@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✒️ Quill – Notes with Purpose. Built for the Future.
 
-## Getting Started
+<div align="center">
+    <img src="./public/quill_logo.png/" alt="Quill Logo" width="100" height="100" />
+</div>
 
-First, run the development server:
+Quill is a minimalist, responsive note-taking app built with **Next.js 14**, **React**, **TypeScript**, and **Tailwind CSS**, styled with components from **shadcn/ui**. Designed for clean productivity and future AI enhancement.
+
+This is the foundation app for building smarter tools like summarization, voice notes, and study aids in upcoming project phases.
+
+
+Here’s a **fully detailed `README.md`** for your **Quill App**, written to showcase it as a modern, extensible, AI-ready notes platform — perfect for recruiters, collaborators, or portfolio viewers.
+
+---
+
+```markdown
+# ✒️ Quill – Smart, Minimalist Notes App
+
+<img src="./quill-logo-100x100.png" alt="Quill Logo" width="100" height="100" />
+
+**Quill** is a modern, minimal note-taking app built with **Next.js 14 App Router**, **React**, **TypeScript**, and **Tailwind CSS**, styled using **shadcn/ui** components. It provides a clean and responsive interface for creating, viewing, and managing notes — fully stored in the browser with `localStorage`.
+
+Quill is designed as the foundation for advanced features like AI-powered summarization, flashcards, voice input, and smart search.
+
+---
+
+## 🚀 Live Demo
+
+[https://quill-notes.vercel.app](https://quill-notes.vercel.app) (replace with your actual link)
+
+---
+
+## ✨ Features
+
+- ✅ Create, view, and delete notes
+- 🔁 Persist notes in `localStorage` across sessions
+- 🧩 Componentized architecture with React + TypeScript
+- 🌗 Fully responsive design with light/dark theme toggle
+- 💨 Built with Tailwind CSS and styled via `shadcn/ui`
+- 📄 Clean folder structure using App Router conventions
+- 🧠 Future-ready for AI features like summarization and flashcards
+
+---
+
+## 🧠 Tech Stack
+
+| Tech         | Purpose                                |
+|--------------|----------------------------------------|
+| Next.js 14   | App Router, server/client separation   |
+| TypeScript   | Type safety for components and data    |
+| Tailwind CSS | Utility-first styling                  |
+| shadcn/ui    | Accessible, customizable UI components |
+| localStorage | Persistent data layer (MVP)            |
+| Vercel       | Hosting and CI/CD                      |
+
+---
+
+## 📂 Project Structure
+
+```
+
+src/
+├── app/               # App Router pages and layouts
+│   ├── layout.tsx     # Root layout
+│   ├── page.tsx       # Home or dashboard
+│   └── dashboard/
+│       └── \[id]/      # Dynamic route for note details
+├── components/        # NoteForm, NoteCard, Header, etc.
+├── context/           # Theme provider and app-wide context
+├── lib/               # Utility logic (e.g., localStorage helpers)
+├── styles/            # Tailwind/global CSS
+├── types/             # TypeScript interfaces and types
+
+````
+
+---
+
+## 📝 Data Model
+
+```ts
+// types/index.ts
+export interface Note {
+  id: string
+  title: string
+  content: string
+  createdAt: string
+}
+````
+
+Notes are stored as a JSON array in localStorage under the key `"quill-notes"`.
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/quill.git
+cd quill
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000` to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔮 Future Roadmap (Phase 2+)
 
-## Learn More
+| Feature                     | Integration                    |
+| --------------------------- | ------------------------------ |
+| 🧠 Summarize notes w/ GPT-4 | OpenAI API                     |
+| 🃏 Flashcards from content  | GPT prompts                    |
+| ❓ Quiz generator            | QA from text                   |
+| 🗣️ Voice input & output    | Whisper / Web Speech API       |
+| 🔍 Semantic search          | Embeddings (OpenAI / Pinecone) |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📸 Screenshots
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Add screenshots here once the app is styled and deployed
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Testing (Optional)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Coming soon – unit tests and component tests with React Testing Library
+
+---
+
+## 🧾 License
+
+[MIT](LICENSE)
+
+---
+
+## 🧑‍💻 Author
+
+Built with 💙 by [Your Name](https://github.com/your-username)
+
+```
+
+---
+
+Would you like this README exported to a `.md` file and added to your current project ZIP or GitHub repo?
+```
