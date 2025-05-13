@@ -1,6 +1,9 @@
 'use client'
 import { useState } from 'react'
 import {Note} from '@/types'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 import { v4 as uuidv4 } from 'uuid'
 
 interface NoteFormProps {
@@ -36,32 +39,32 @@ export default function NoteForm({ onAddNote }: NoteFormProps){
  }
 
  return(
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 mb-6">
         <div>
-            <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title:</label>
-            <input 
+            <label htmlFor="title" className="block text-sm font-medium mb-1">Title:</label>
+            <Input 
                 type="text" 
                 id="title" 
                 name="title" 
                 value={title} 
                 onChange={(e) => setTitle(e.target.value)}
-                className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder='Note title'
             />
         </div>
         <div>
-            <label htmlFor="content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content:</label>
-            <textarea 
+            <label htmlFor="content" className="block text-sm font-medium mb-1">Content:</label>
+            <Textarea 
                 id="content" 
                 name="content"
                 rows={4} 
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write a note here...">
-            </textarea>
+                onChange={(e) => setContent(e.target.value)} 
+                placeholder='Write your note here...'
+            />
         </div>
-        <button  type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+        <Button  type="submit" className="w-full">
             Save Note
-        </button>
+        </Button>
     </form>
 
  )

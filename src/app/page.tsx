@@ -30,11 +30,11 @@ const handleAddNote = (newNote: Note) => {
     <main className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Your Notes</h1>
       <NoteForm onAddNote={handleAddNote} />
-      <ul className="space-y-4">
+      <div className="grid gap-4">
         {notes.map((note) => (
           <NoteCard key={note.id} note={note}/>
         ))}
-      </ul>
+      </div>
     </main>
   )
 }
