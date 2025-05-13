@@ -1,7 +1,7 @@
 # ✒️ Quill – Notes with Purpose. Built for the Future.
 
 <div align="center">
-    <img src="./public/quill_logo.png/" alt="Quill Logo" width="100" height="100" />
+    <img src="./public/quill_logo.png/" alt="Quill Logo" width="250" height="250" />
 </div>
 
 **Quill** is a modern, minimal note-taking app built with **Next.js 14 App Router**, **React**, **TypeScript**, and **Tailwind CSS**, styled using **shadcn/ui** components. It provides a clean and responsive interface for creating, viewing, and managing notes — fully stored in the browser with `localStorage`.

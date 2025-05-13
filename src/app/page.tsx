@@ -4,29 +4,23 @@ import { useState, useEffect } from "react"
 import { Note } from '@/types'
 import NoteCard from '@/components/NoteCard'
 import NoteForm from "@/components/NoteForm"
+import { saveNotes, loadNotes } from "@/lib/notes"
 
 
 export default function Page(){
   const [notes, setNotes] = useState<Note[]>([])
 
- // Set sample notes after hydration
+ // Load notes from localStorage on first render
   useEffect(() => {
-    const sampleNotes: Note[]= [
-    {
-      id: '1',
-      title: 'Welcome to Quill',
-      content: 'This is your first note. Feel free to edit or delete it',
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: '2',
-      title: 'Second Note',
-      content: 'Quill is built with React, Next.js and TypeScript!',
-      createdAt: new Date().toISOString(),
-    },
-  ]
-  setNotes(sampleNotes)
-}, [])
+    const storedNotes = loadNotes()
+      setNotes(storedNotes)
+  },[])
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    saveNotes(notes)
+  }, [notes])
+  
 
 const handleAddNote = (newNote: Note) => {
   setNotes((prevNotes) => [newNote, ...prevNotes])
