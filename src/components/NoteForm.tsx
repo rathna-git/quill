@@ -1,19 +1,19 @@
 'use client'
+
 import { useState } from 'react'
-import {Note} from '@/types'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
 import { v4 as uuidv4 } from 'uuid'
+import {Note} from '@/types'
+import { useAddNoteWithToast } from '@/hooks/useAddNoteWithToast'
+import { Input } from './ui/input'
+import { Textarea } from './ui/textarea'
+import { Button } from './ui/button'
 
-interface NoteFormProps {
-    onAddNote: (note: Note) => void
-}
 
 
-export default function NoteForm({ onAddNote }: NoteFormProps){
+export default function NoteForm(){
  const [title, setTitle] = useState('')
  const [content, setContent] = useState('')
+ const { handleAdd } = useAddNoteWithToast()
 
  const handleSubmit = (e: React.FormEvent) => {
     //prevents automatic page refresh on form submission by HTML
@@ -28,7 +28,7 @@ export default function NoteForm({ onAddNote }: NoteFormProps){
     }
 
     // sends the new note up to the parent component (page.tsx) by calling the onAddNote function — which adds the note to the notes list.
-    onAddNote(newNote) 
+    handleAdd(newNote)
     // clears the form inputs after submission by resetting both fields to empty strings.
     setTitle('')
     setContent('')

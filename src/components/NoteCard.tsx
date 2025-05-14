@@ -1,14 +1,27 @@
 
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import { AlertDialog, 
+         AlertDialogAction, 
+         AlertDialogCancel, 
+         AlertDialogContent, 
+         AlertDialogDescription, 
+         AlertDialogFooter, 
+         AlertDialogHeader, 
+         AlertDialogTitle, 
+         AlertDialogTrigger } from './ui/alert-dialog'
+import { Card, 
+         CardContent, 
+         CardHeader, 
+         CardTitle, 
+         CardDescription, 
+         CardFooter } from './ui/card'
 import { Button } from './ui/button'
-import { useNoteStore } from '@/store/noteStore'
+import { useDeleteNoteWithConfirm } from '@/hooks/useDeleteNoteWithConfirm'
 import { Trash2 } from 'lucide-react'
 import { Note } from'@/types'
 
 
 export default function NoteCard({note}: {note: Note}){
-    const deleteNote = useNoteStore((state) => state.deleteNote)
+    const { handleDelete } = useDeleteNoteWithConfirm()
 
     return (
         <Card>
@@ -40,12 +53,13 @@ export default function NoteCard({note}: {note: Note}){
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action will permanently delete this note. You can`&apos`t undo this.
+                                This action will permanently delete this note. You can&apos;t undo this.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => deleteNote(note.id)}>
+                            <AlertDialogAction 
+                                onClick={() => handleDelete(note.id)}>
                                 Yes, delete it
                             </AlertDialogAction>
                         </AlertDialogFooter>
