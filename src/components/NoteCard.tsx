@@ -23,7 +23,7 @@ export default function NoteCard({note}: {note: Note}){
                 <p className="text-sm text-gray-600">{note.content}</p>
             </CardContent>
 
-            <CardFooter className='grid grid-flow-col justify-items-end' >
+            <CardFooter className='grid grid-flow-col justify-items-end'>
                 <Button
                     variant = 'outline'
                     size='icon'
