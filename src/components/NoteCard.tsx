@@ -1,8 +1,10 @@
-import { Note } from'@/types'
+
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { Button } from './ui/button'
 import { useNoteStore } from '@/store/noteStore'
 import { Trash2 } from 'lucide-react'
+import { Note } from'@/types'
 
 
 export default function NoteCard({note}: {note: Note}){
@@ -20,18 +22,35 @@ export default function NoteCard({note}: {note: Note}){
             </CardHeader>
 
             <CardContent>
-                <p className="text-sm text-gray-600">{note.content}</p>
+                <p className="text-sm text-gray-800">{note.content}</p>
             </CardContent>
 
             <CardFooter className='grid grid-flow-col justify-items-end'>
-                <Button
-                    variant = 'outline'
-                    size='icon'
-                    onClick={() => deleteNote(note.id)}
-                    className="text-red-500 hover:bg-red-100"
-                >
-                    <Trash2/>
-                </Button> 
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button
+                            variant = 'outline'
+                            size='icon'
+                            className="text-red-500 hover:bg-red-100"
+                        >
+                            <Trash2/>
+                        </Button> 
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action will permanently delete this note. You can`&apos`t undo this.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => deleteNote(note.id)}>
+                                Yes, delete it
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </CardFooter>
         </Card>   
     )   
