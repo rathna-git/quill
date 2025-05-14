@@ -2,12 +2,11 @@
 
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import {Note} from '@/types'
+import { Note } from '@/types'
 import { useAddNoteWithToast } from '@/hooks/useAddNoteWithToast'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
-
 
 
 export default function NoteForm(){
@@ -27,7 +26,7 @@ export default function NoteForm(){
         createdAt: new Date().toISOString(),
     }
 
-    // sends the new note up to the parent component (page.tsx) by calling the onAddNote function — which adds the note to the notes list.
+    // sends the new note up to the parent component (page.tsx) by calling the handleAdd function — which adds the note to the notes list.
     handleAdd(newNote)
     // clears the form inputs after submission by resetting both fields to empty strings.
     setTitle('')
