@@ -17,6 +17,7 @@ import { Card,
 import { Button } from './ui/button'
 import { useDeleteNoteWithConfirm } from '@/hooks/useDeleteNoteWithConfirm'
 import { Trash2 } from 'lucide-react'
+import Link from 'next/link'
 import { Note } from'@/types'
 
 
