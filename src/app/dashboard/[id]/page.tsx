@@ -1,17 +1,23 @@
 'use client'
 
+import Link from "next/link"
+import { useParams } from "next/navigation"
 import { useNoteStore } from "@/store/noteStore"
 import { Card,
          CardContent,
          CardDescription,
          CardHeader,
          CardTitle } from '@/components/ui/card'
-import Link from "next/link"
 
 
-export default function NotePage({ params } : { params: { id: string } }) {
+
+export default function NotePage() {
+    
+    const params = useParams()
+    const id = params.id as string
+
     const { notes } = useNoteStore()
-    const note = notes.find((n) => n.id === params.id)
+    const note = notes.find((n) => n.id === id)
 
     if (!note){
         return(
