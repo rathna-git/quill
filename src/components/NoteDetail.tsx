@@ -22,7 +22,7 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <Link href="/" className="text-sm text-blue-600 hover:underline block mb-4">
+      <Link href="/dashboard" className="text-sm text-blue-600 hover:underline block mb-4">
         ← Back to Notes
       </Link>
 
