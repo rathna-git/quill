@@ -22,7 +22,7 @@ export default function NoteCard({note}: {note: Note}){
                     </div>                 
                 </CardHeader>
                 <CardContent>
-                    <p className="text-sm text-gray-800 line-clamp-2">{note.content}</p>
+                    <p className="text-sm line-clamp-2">{note.content}</p>
                 </CardContent>
             </Card>   
         </Link>
