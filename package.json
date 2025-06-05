@@ -34,5 +34,9 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.2.9",
     "typescript": "^5"
-  }
+  },
+  "description": "<div align=\"center\">     <img src=\"./public/quill_logo.png/\" alt=\"Quill Logo\" width=\"250\" height=\"250\" /> </div>",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
