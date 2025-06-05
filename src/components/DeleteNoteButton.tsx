@@ -43,7 +43,7 @@ export default function DeleteNoteButton({ noteId }: { noteId: string }) {
           <AlertDialogAction
             onClick={() => {
               handleDelete(noteId)
-              router.push('/')
+              router.push('/dashboard')
             }}
           >
             Yes, delete it

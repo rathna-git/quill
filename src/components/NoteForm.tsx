@@ -7,6 +7,7 @@ import { useAddNoteWithToast } from '@/hooks/useAddNoteWithToast'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
+import { toast } from 'sonner'
 
 
 export default function NoteForm(){
@@ -17,6 +18,14 @@ export default function NoteForm(){
  const handleSubmit = (e: React.FormEvent) => {
     //prevents automatic page refresh on form submission by HTML
     e.preventDefault();
+    
+    // checks if title or content is empty after trimming whitespace
+    if(!title.trim() || !content.trim()) {
+        // if either field is empty, it shows a warning toast message and exits the function
+        toast.warning('Title and content cannot be empty.')
+        // this prevents the form from being submitted with empty fields
+        return
+    }   
 
     // creates a new note object that follows the Note interface:
     const newNote: Note = {

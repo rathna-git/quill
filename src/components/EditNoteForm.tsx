@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import { useNoteStore } from '@/store/noteStore'
 import { Note } from '@/types'
 import { Button } from '@/components/ui/button'
@@ -31,6 +32,12 @@ export default function EditNoteForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    if(!title.trim() || !content.trim()) {  
+      toast.warning('Title and content cannot be empty.')
+      return
+    } 
+    
     updateNote({ ...note, title, content })
     onCancel()
   }
