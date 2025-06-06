@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font'
-import "./globals.css";
+import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from '@/components/Header';
 
