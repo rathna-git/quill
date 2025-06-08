@@ -1,25 +1,13 @@
 'use client'
 
-import Link from "next/link"    // Importing Next.js Image component for optimized images
-import Image from "next/image"  // Importing Next.js Link component for client-side navigation
-import { Button } from '@/components/ui/button'
+import Link from "next/link"
+import Image from "next/image"
+//import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
-//import { useAuth } from '@/hooks/useAuth'
-//import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { UserButton, SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
 
 export default function Header() {
-  //const { user, signOut } = useAuth()
-  //const pathname = usePathname()
-  const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -54,15 +42,12 @@ export default function Header() {
           </div>
           <nav className="flex items-center space-x-2">
             <ModeToggle />
-            {/* {user ? (
-              <Button variant="outline" onClick={signOut}>
-                Sign Out
-              </Button>
-            ) : ( */}
-              <Link href="/login">
-                <Button variant="outline">Sign In</Button>
-              </Link>
-            {/* )} */}
+            <SignedIn>
+                <UserButton />
+            </SignedIn>
+            <SignedOut>
+                <SignInButton/>
+            </SignedOut>           
           </nav>
         </div>
       </div>

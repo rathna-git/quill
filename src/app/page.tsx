@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="min-h-screen relative">
       {/* Animated background */}
@@ -44,7 +44,7 @@ export default function Home() {
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-[#3a2f7c] to-[#5876ef] bg-clip-text text-transparent">
               Welcome to Quill
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-l text-muted-foreground leading-relaxed">
               Your intelligent note companion — designed to help you capture, organize, and refine ideas effortlessly. 
               With built-in AI features like smart summaries, tone adjustment, and contextual suggestions, Quill turns simple notes 
               into powerful insights.</p>
