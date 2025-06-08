@@ -3,10 +3,19 @@ import { GeistSans } from 'geist/font'
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from '@/components/Header';
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Quill - Your AI Writing Assistant",
   description: "Enhance your writing with AI-powered assistance",
+  icons: {
+    icon: [
+      {
+        url: '/quill_logo_default.png',
+        href: '/quill_logo_default.png',
+      }
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -25,6 +34,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

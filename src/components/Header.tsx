@@ -4,13 +4,13 @@ import Link from "next/link"    // Importing Next.js Image component for optimiz
 import Image from "next/image"  // Importing Next.js Link component for client-side navigation
 import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
-import { useAuth } from '@/hooks/useAuth'
-import { usePathname } from 'next/navigation'
+//import { useAuth } from '@/hooks/useAuth'
+//import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Header() {
-  const { user, signOut } = useAuth()
-  const pathname = usePathname()
+  //const { user, signOut } = useAuth()
+  //const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -54,15 +54,15 @@ export default function Header() {
           </div>
           <nav className="flex items-center space-x-2">
             <ModeToggle />
-            {user ? (
+            {/* {user ? (
               <Button variant="outline" onClick={signOut}>
                 Sign Out
               </Button>
-            ) : (
+            ) : ( */}
               <Link href="/login">
                 <Button variant="outline">Sign In</Button>
               </Link>
-            )}
+            {/* )} */}
           </nav>
         </div>
       </div>
