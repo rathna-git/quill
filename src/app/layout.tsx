@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/quill_logo_default.png',
-        href: '/quill_logo_default.png',
+        url: '/quill_favicon.ico',
+        href: '/quill_favicon.ico',
       }
     ],
   },
