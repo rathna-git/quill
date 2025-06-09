@@ -46,9 +46,9 @@ export default function Header() {
                 <UserButton />
             </SignedIn>
             <SignedOut>
-                <Link href="/src/app/sign-in">
+                <SignInButton mode="modal">
                   <Button>Sign In</Button>
-                </Link>
+                </SignInButton>
             </SignedOut>           
           </nav>
         </div>
