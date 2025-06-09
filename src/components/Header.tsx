@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import Image from "next/image"
-//import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
-import { UserButton, SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
+import { UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs'
+import { Button } from "./ui/button"
 
 export default function Header() {
 
@@ -46,7 +46,9 @@ export default function Header() {
                 <UserButton />
             </SignedIn>
             <SignedOut>
-                <SignInButton/>
+                <Link href="/src/app/sign-in">
+                  <Button>Sign In</Button>
+                </Link>
             </SignedOut>           
           </nav>
         </div>
