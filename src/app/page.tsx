@@ -4,10 +4,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen relative">
       {/* Animated background */}
-      <div className="fixed inset-0 bg-background overflow-hidden">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#5876ef]/30 via-[#3a2f7c]/20 to-[#5876ef]/30" />
-        
+      <div className="fixed inset-0 bg-white overflow-hidden">
         {/* Simple animated orbs */}
         <div className="absolute w-[20px] h-[20px] rounded-full bg-[#5876ef]/60 animate-float1" style={{ top: '10%', left: '5%' }} />
         <div className="absolute w-[15px] h-[15px] rounded-full bg-[#3a2f7c]/60 animate-float2" style={{ top: '30%', right: '5%' }} />

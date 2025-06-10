@@ -3,36 +3,23 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ModeToggle } from '@/components/mode-toggle'
-import { UserButton, SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
-
-function AuthButtons() {
-  return (
-    <div className="relative z-50">
-      <SignedIn>
-        <div className="relative z-50">
-          <UserButton />
-        </div>
-      </SignedIn>
-      <SignedOut>
-        <SignInButton>
-          <button 
-            type="button"
-            className="cursor-pointer inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white hover:bg-red-600 h-10 px-4 py-2 relative z-50"
-          >
-            Sign In
-          </button>
-        </SignInButton>
-      </SignedOut>
-    </div>
-  )
-}
+import AuthButtons from '@/components/AuthButtons'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* Base gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#5876ef]/15 via-[#3a2f7c]/10 to-[#5876ef]/15" />
-      
+    <header className={`sticky top-0 z-40 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 transition-shadow duration-200 ${isScrolled ? 'shadow-sm' : ''}`}>
       <div className="container flex h-20 max-w-screen-2xl items-center py-4 px-8">
         <div className="flex items-center">
           <Link 
