@@ -1,3 +1,5 @@
+'use client'
+
 import { Card, 
          CardContent, 
          CardHeader, 
@@ -5,19 +7,27 @@ import { Card,
          CardDescription } from './ui/card'
 import Link from 'next/link'
 import { Note } from'@/types'
+import { useEffect, useState } from 'react'
 
+export default function NoteCard({note}: {note: Note}) {
+    const [mounted, setMounted] = useState(false)
 
-export default function NoteCard({note}: {note: Note}){
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
+    if (!mounted) {
+        return null
+    }
 
     return (
         <Link href={`/dashboard/${note.id}`} className='block'>
-            <Card className='hover:shadow-md trasition-shadow cursor-pointer'>
+            <Card className='hover:shadow-md transition-shadow cursor-pointer'>
                 <CardHeader>
                     <div>
                         <CardTitle className='text-lg'>{note.title}</CardTitle>
-                        <CardDescription className="text-xs text-gray-500">
-                        {new Date(note.createdAt).toLocaleString()}
+                        <CardDescription className="text-xs text-muted-foreground">
+                            {new Date(note.createdAt).toLocaleString()}
                         </CardDescription>
                     </div>                 
                 </CardHeader>
@@ -26,6 +36,5 @@ export default function NoteCard({note}: {note: Note}){
                 </CardContent>
             </Card>   
         </Link>
-       
     )   
 }

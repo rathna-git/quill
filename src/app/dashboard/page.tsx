@@ -3,21 +3,29 @@
 import NoteCard from '@/components/NoteCard'
 import NoteForm from "@/components/NoteForm"
 import { useNoteStore } from '@/store/noteStore'
+import { useEffect, useState } from 'react'
 
+export default function Page() {
+  const { notes } = useNoteStore()
+  const [isMounted, setIsMounted] = useState(false)
 
-export default function Page(){
-  const { notes } = useNoteStore() // reads notes from the Zustand useNoteStore
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
+  if (!isMounted) {
+    return null // or a loading skeleton
+  }
 
-  return(
+  return (
     <main className="p-6 max-w-3xl mx-auto">
       <NoteForm />
       <div className="grid gap-4">
         {notes.length === 0 ? (
-          <p className='text-sm text-gray-500 italic'>No notes yet. Start by adding one!</p>
+          <p className='text-sm text-muted-foreground italic'>No notes yet. Start by adding one!</p>
         ) : (
           <div className='grid gap-4'> 
-             {notes.map((note) => (
+            {notes.map((note) => (
               <NoteCard key={note.id} note={note} />
             ))}
           </div>
