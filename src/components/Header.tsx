@@ -19,7 +19,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-40 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 transition-shadow duration-200 ${isScrolled ? 'shadow-sm' : ''}`}>
+    <header className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-shadow duration-200 ${isScrolled ? 'shadow-sm' : ''}`}>
       <div className="container flex h-20 max-w-screen-2xl items-center py-4 px-8">
         <div className="flex items-center">
           <Link 

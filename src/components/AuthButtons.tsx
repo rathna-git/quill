@@ -12,10 +12,7 @@ export default function AuthButtons() {
       </SignedIn>
       <SignedOut>
         <SignInButton>
-          <button 
-            type="button"
-            className="cursor-pointer text-sm font-medium text-[#3a2f7c] hover:text-[#5876ef] transition-colors relative z-50"
-          >
+          <button className="text-sm font-medium text-[#5e41ff] hover:text-[#5876ef] transition-colors">
             Log In
           </button>
         </SignInButton>
