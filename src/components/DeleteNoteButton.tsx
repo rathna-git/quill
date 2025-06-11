@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { useDeleteNoteWithConfirm } from '@/hooks/useDeleteNoteWithConfirm'
 import {
   AlertDialog,
@@ -15,10 +14,26 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
+import { Note } from '@/types'
 
-export default function DeleteNoteButton({ noteId }: { noteId: string }) {
+interface DeleteNoteButtonProps {
+  noteId: string
+  onDelete: (note: Note) => void
+}
+
+export default function DeleteNoteButton({ noteId, onDelete }: DeleteNoteButtonProps) {
   const { handleDelete } = useDeleteNoteWithConfirm()
-  const router = useRouter()
+
+  const handleDeleteAndNavigate = () => {
+    try {
+      const note = handleDelete(noteId)
+      if (note) {
+        onDelete(note)
+      }
+    } catch (err) {
+      console.error('Failed to delete note:', err)
+    }
+  }
 
   return (
     <AlertDialog>
@@ -40,12 +55,7 @@ export default function DeleteNoteButton({ noteId }: { noteId: string }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              handleDelete(noteId)
-              router.push('/dashboard')
-            }}
-          >
+          <AlertDialogAction onClick={handleDeleteAndNavigate}>
             Yes, delete it
           </AlertDialogAction>
         </AlertDialogFooter>

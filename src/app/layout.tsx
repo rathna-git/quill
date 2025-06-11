@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from '@clerk/nextjs';
 import Header from '@/components/Header';
+import { Toaster } from 'react-hot-toast';
+import { DeleteToastProvider } from '@/components/DeleteToastProvider';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,8 +32,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <ClerkProvider dynamic>
-            <Header />
-            <main>{children}</main>
+            <DeleteToastProvider>
+              <Header />
+              <main>{children}</main>
+              <Toaster position="top-center" />
+            </DeleteToastProvider>
           </ClerkProvider>
         </ThemeProvider>
       </body>

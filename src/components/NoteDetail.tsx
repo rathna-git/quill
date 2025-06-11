@@ -8,9 +8,24 @@ import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import EditNoteForm from './EditNoteForm'
 import DeleteNoteButton from './DeleteNoteButton'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { useDeleteToast } from './DeleteToastProvider'
 
 export default function NoteDetail({ note }: { note: Note | undefined }) {
   const [isEditing, setIsEditing] = useState(false)
+  const router = useRouter()
+  const { showDeleteToast } = useDeleteToast()
+
+  const handleEditComplete = () => {
+    toast.success('Note updated successfully!')
+    setIsEditing(false)
+  }
+
+  const handleDelete = (note: Note) => {
+    showDeleteToast(note)
+    router.push('/dashboard')
+  }
 
   if (!note) {
     return (
@@ -27,7 +42,11 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
       </Link>
 
       {isEditing ? (
-        <EditNoteForm note={note} onCancel={() => setIsEditing(false)} />
+        <EditNoteForm 
+          note={note} 
+          onCancel={handleEditComplete} 
+          onUpdate={handleEditComplete}
+        />
       ) : (
         <Card>
           <CardHeader>
@@ -46,7 +65,7 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
             >
               <Pencil />
             </Button>
-            <DeleteNoteButton noteId={note.id} />
+            <DeleteNoteButton noteId={note.id} onDelete={handleDelete} />
           </CardFooter>
         </Card>
       )}

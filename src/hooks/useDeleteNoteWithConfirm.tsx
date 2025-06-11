@@ -1,8 +1,6 @@
-import { useRouter } from "next/navigation";
 import { useNoteStore } from "@/store/noteStore";
-import { toast } from "sonner";
-import { Note, UndoToastProps } from "@/types"; 
-import UndoToast from "@/components/UndoToast";
+import { Note } from "@/types"; 
+import { useState } from "react";
 
 /**
  * A hook that provides functionality to delete a note with a confirmation toast
@@ -15,34 +13,34 @@ export function useDeleteNoteWithConfirm() {
     const deleteNote = useNoteStore((state) => state.deleteNote)
     const addNote = useNoteStore((state) => state.addNote)
     const notes = useNoteStore((state) => state.notes)
-    const router = useRouter()  
+    const [deletedNote, setDeletedNote] = useState<Note | null>(null)
 
     /**
      * Deletes a note and shows a confirmation toast with undo option
      * @param {string} id - The ID of the note to delete
      */
-    function handleDelete(id: string) {
-        const deletedNote = notes.find((note: Note) => note.id === id)
-        if (!deletedNote) return
+    function handleDelete(id: string): Note | null {
+        const note = notes.find((note: Note) => note.id === id)
+        if (!note) return null
 
         deleteNote(id)
-        // Create a custom toast with the UndoToast component
-        // The toast will show for 2 seconds and allow undoing the deletion
-        toast.custom((t) => {
-            // Prepare props for the UndoToast component
-            const props: UndoToastProps = {
-                t: { id: t.toString() }, // Pass the toast ID for dismissal
-                note: deletedNote,       // Pass the deleted note for potential restoration
-                addNote,                 // Pass the function to restore the note
-                router                   // Pass the router for navigation after undo
-            }
-            return <UndoToast {...props} />
-        }, {
-            duration: 5000  // 5 seconds
-        });
+        setDeletedNote(note)
+        return note
+    }
+
+    function handleDismiss() {
+        setDeletedNote(null)
+    }
+
+    function handleUndo(note: Note) {
+        addNote(note)
+        setDeletedNote(null)
     }
 
     return {
         handleDelete,
+        deletedNote,
+        handleDismiss,
+        handleUndo,
     }
 }

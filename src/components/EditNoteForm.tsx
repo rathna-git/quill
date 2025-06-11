@@ -1,19 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
-import { useNoteStore } from '@/store/noteStore'
+import toast from 'react-hot-toast'
 import { Note } from '@/types'
 import { Button } from '@/components/ui/button'
 
-export default function EditNoteForm({
-  note,
-  onCancel,
-}: {
+interface EditNoteFormProps {
   note: Note
   onCancel: () => void
-}) {
-  const { updateNote } = useNoteStore()
+  onUpdate: (note: Note) => void
+}
+
+export default function EditNoteForm({ note, onCancel, onUpdate }: EditNoteFormProps) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
@@ -25,7 +23,7 @@ export default function EditNoteForm({
       setContent(note.content)
       setTimeout(() => {
         inputareaRef.current?.focus()
-      }, 0) // Autofocuses the input area(title). The ?. makes sure it doesn’t crash if it's still null. 
+      }, 0) // Autofocuses the input area(title). The ?. makes sure it doesn't crash if it's still null. 
       // delay focus by a tick to ensure DOM stability before focusing
     }
   }, [note])
@@ -34,12 +32,11 @@ export default function EditNoteForm({
     e.preventDefault()
 
     if(!title.trim() || !content.trim()) {  
-      toast.warning('Title and content cannot be empty.')
+      toast.error('Title and content cannot be empty')
       return
     } 
     
-    updateNote({ ...note, title, content })
-    onCancel()
+    onUpdate({ ...note, title, content })
   }
 
   return (

@@ -7,8 +7,7 @@ import { useAddNoteWithToast } from '@/hooks/useAddNoteWithToast'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
-import { toast } from 'sonner'
-
+import toast from 'react-hot-toast'
 
 export default function NoteForm(){
  const [title, setTitle] = useState('')
@@ -22,7 +21,7 @@ export default function NoteForm(){
     // checks if title or content is empty after trimming whitespace
     if(!title.trim() || !content.trim()) {
         // if either field is empty, it shows a warning toast message and exits the function
-        toast.warning('Title and content cannot be empty.')
+        toast.error('Title and content cannot be empty.')
         // this prevents the form from being submitted with empty fields
         return
     }   
@@ -40,8 +39,6 @@ export default function NoteForm(){
     // clears the form inputs after submission by resetting both fields to empty strings.
     setTitle('')
     setContent('')
-
-    console.log({title, content})
    
     //later pass this to the parent component or save to state/localstorage
  }
