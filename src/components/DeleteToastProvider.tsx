@@ -58,10 +58,15 @@ export function DeleteToastProvider({ children }: { children: ReactNode }) {
         }
         // Only delete and navigate when timer runs out
         if (noteToDeleteRef.current && !isUndoingRef.current) {
-          deleteNote(noteToDeleteRef.current.id)
           setShowToast(false)
-          noteToDeleteRef.current = null
-          router.push('/dashboard')
+          setSuccessMessage('Note deleted successfully')
+          setShowSuccess(true)
+          setTimeout(() => {
+            deleteNote(noteToDeleteRef.current!.id)
+            setShowSuccess(false)
+            noteToDeleteRef.current = null
+            router.push('/dashboard')
+          }, 1000)
         }
       }
     }, 20)
@@ -93,10 +98,15 @@ export function DeleteToastProvider({ children }: { children: ReactNode }) {
     }
 
     if (!isUndoingRef.current && noteToDeleteRef.current) {
-      deleteNote(noteToDeleteRef.current.id)
       setShowToast(false)
-      noteToDeleteRef.current = null
-      router.push('/dashboard')
+      setSuccessMessage('Note deleted successfully')
+      setShowSuccess(true)
+      setTimeout(() => {
+        deleteNote(noteToDeleteRef.current!.id)
+        setShowSuccess(false)
+        noteToDeleteRef.current = null
+        router.push('/dashboard')
+      }, 1000)
     }
   }
 

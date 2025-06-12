@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import { Note } from '@/types'
 
 interface NoteStore {
@@ -34,7 +34,9 @@ export const useNoteStore = create<NoteStore>()(
             setPendingDelete: (id) => set({ pendingDeleteId: id }),
         }),
         {
-            name: 'quill-notes', //key in localStorage
+            name: 'quill-notes',
+            storage: createJSONStorage(() => localStorage),
+            partialize: (state) => ({ notes: state.notes })
         }
     )
 )

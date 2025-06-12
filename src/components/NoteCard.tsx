@@ -8,6 +8,7 @@ import { Card,
 import Link from 'next/link'
 import { Note } from'@/types'
 import { useEffect, useState } from 'react'
+import { NoteContent } from './NoteContent'
 
 export default function NoteCard({note}: {note: Note}) {
     const [mounted, setMounted] = useState(false)
@@ -32,7 +33,9 @@ export default function NoteCard({note}: {note: Note}) {
                     </div>                 
                 </CardHeader>
                 <CardContent>
-                    <p className="text-sm line-clamp-2">{note.content}</p>
+                    <div className="text-sm line-clamp-2">
+                        <NoteContent content={note.content} />
+                    </div>
                 </CardContent>
             </Card>   
         </Link>

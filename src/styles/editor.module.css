@@ -1,0 +1,70 @@
+.editor {
+  @apply max-w-none;
+}
+
+.editor :global(.ProseMirror) {
+  @apply min-h-[150px] outline-none;
+}
+
+.editor :global(.ProseMirror p) {
+  @apply my-2;
+}
+
+.editor :global(.ProseMirror h1) {
+  @apply text-2xl font-bold my-4;
+}
+
+.editor :global(.ProseMirror h2) {
+  @apply text-xl font-bold my-3;
+}
+
+.editor :global(.ProseMirror ul) {
+  @apply list-disc pl-6 my-2;
+}
+
+.editor :global(.ProseMirror ol) {
+  @apply list-decimal pl-6 my-2;
+}
+
+.editor :global(.ProseMirror blockquote) {
+  @apply border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-2 italic;
+}
+
+/* Dark mode specific styles */
+.dark .editor :global(.ProseMirror) {
+  @apply text-gray-100;
+}
+
+.dark .editor :global(.ProseMirror p) {
+  @apply text-gray-100;
+}
+
+.dark .editor :global(.ProseMirror h1),
+.dark .editor :global(.ProseMirror h2) {
+  @apply text-gray-100;
+}
+
+.dark .editor :global(.ProseMirror ul),
+.dark .editor :global(.ProseMirror ol) {
+  @apply text-gray-100;
+}
+
+.dark .editor :global(.ProseMirror blockquote) {
+  @apply text-gray-300;
+}
+
+.editor :global(.ProseMirror strong) {
+  font-weight: bold;
+}
+
+.editor :global(.ProseMirror em) {
+  font-style: italic;
+}
+
+.editor :global(p.is-editor-empty:first-child::before) {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+} 

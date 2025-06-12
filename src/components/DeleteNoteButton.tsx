@@ -1,6 +1,5 @@
 'use client'
 
-import { useDeleteNoteWithConfirm } from '@/hooks/useDeleteNoteWithConfirm'
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -14,21 +13,18 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
-import { Note } from '@/types'
+import { useDeleteToast } from './DeleteToastProvider'
 
 interface DeleteNoteButtonProps {
   noteId: string
-  onDelete: (note: Note) => void
 }
 
-export default function DeleteNoteButton({ noteId, onDelete }: DeleteNoteButtonProps) {
-  const { handleDelete } = useDeleteNoteWithConfirm()
+export default function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
+  const { showDeleteToast } = useDeleteToast()
 
   const handleDeleteAndNavigate = () => {
-    const note = handleDelete(noteId)
-    if (note) {
-      onDelete(note)
-    }
+    const note = { id: noteId, title: '', content: '', createdAt: new Date().toISOString() }
+    showDeleteToast(note)
   }
 
   return (

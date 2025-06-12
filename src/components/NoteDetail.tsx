@@ -8,29 +8,27 @@ import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import EditNoteForm from './EditNoteForm'
 import DeleteNoteButton from './DeleteNoteButton'
+import { useNoteStore } from '@/store/noteStore'
 import toast from 'react-hot-toast'
-import { useDeleteToast } from './DeleteToastProvider'
+import { NoteContent } from './NoteContent'
 
 export default function NoteDetail({ note }: { note: Note | undefined }) {
   const [isEditing, setIsEditing] = useState(false)
-  const { showDeleteToast } = useDeleteToast()
+  const [localNote, setLocalNote] = useState<Note | undefined>(note)
+  const updateNote = useNoteStore((state) => state.updateNote)
 
-  const handleEditComplete = () => {
-    toast.success('Note updated successfully!')
+  const handleUpdate = (updatedNote: Note) => {
+    setLocalNote(updatedNote)
+    updateNote(updatedNote.id, {
+      title: updatedNote.title,
+      content: updatedNote.content
+    })
     setIsEditing(false)
+    toast.success('Note updated successfully!')
   }
 
-  const handleDelete = (note: Note) => {
-    showDeleteToast(note)
-  }
-
-  // If note is not found and not pending delete, show error
-  if (!note) {
-    return (
-      <div className="max-w-2xl mx-auto mt-8 text-red-600 text-sm">
-        Note not found. <Link href="/" className="underline text-blue-600">Go back</Link>
-      </div>
-    )
+  if (!localNote) {
+    return null
   }
 
   return (
@@ -41,18 +39,18 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
 
       {isEditing ? (
         <EditNoteForm 
-          note={note} 
-          onCancel={handleEditComplete} 
-          onUpdate={handleEditComplete}
+          note={localNote} 
+          onCancel={() => setIsEditing(false)} 
+          onUpdate={handleUpdate}
         />
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>{note.title}</CardTitle>
-            <CardDescription>{new Date(note.createdAt).toLocaleString()}</CardDescription>
+            <CardTitle>{localNote.title}</CardTitle>
+            <CardDescription>{new Date(localNote.createdAt).toLocaleString()}</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="whitespace-pre-wrap">{note.content}</p>
+            <NoteContent content={localNote.content} />
           </CardContent>
           <CardFooter className="grid grid-flow-col justify-end gap-2">
             <Button
@@ -63,7 +61,7 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
             >
               <Pencil />
             </Button>
-            <DeleteNoteButton noteId={note.id} onDelete={handleDelete} />
+            <DeleteNoteButton noteId={localNote.id} />
           </CardFooter>
         </Card>
       )}

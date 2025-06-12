@@ -7,15 +7,12 @@ import toast from 'react-hot-toast'
 import EditNoteForm from '@/components/EditNoteForm'
 import DeleteNoteButton from '@/components/DeleteNoteButton'
 import { Note } from '@/types'
-import DeleteToast from '@/components/DeleteToast'
 
 export default function NoteDetail() {
   const { id } = useParams()
   const router = useRouter()
   const { notes, updateNote } = useNoteStore()
   const [isEditing, setIsEditing] = useState(false)
-  const [deletedNote, setDeletedNote] = useState<Note | null>(null)
-  const [showToast, setShowToast] = useState(false)
 
   const note = notes.find((note: Note) => note.id === id)
 
@@ -29,25 +26,8 @@ export default function NoteDetail() {
     return null
   }
 
-  const handleDelete = (note: Note) => {
-    setDeletedNote(note)
-    setShowToast(true)
-    router.push('/dashboard')
-  }
-
-  const handleUndo = (note: Note) => {
-    useNoteStore.getState().addNote(note)
-    setShowToast(false)
-    setDeletedNote(null)
-  }
-
-  const handleDismiss = () => {
-    setShowToast(false)
-    setDeletedNote(null)
-  }
-
   const handleUpdate = (updatedNote: Note) => {
-    updateNote(updatedNote)
+    updateNote(updatedNote.id, updatedNote)
     setIsEditing(false)
     toast.success('Note updated successfully!')
   }
@@ -71,19 +51,11 @@ export default function NoteDetail() {
               >
                 Edit
               </button>
-              <DeleteNoteButton noteId={note.id} onDelete={handleDelete} />
+              <DeleteNoteButton noteId={note.id} />
             </div>
           </div>
           <p className="whitespace-pre-wrap">{note.content}</p>
         </div>
-      )}
-
-      {showToast && deletedNote && (
-        <DeleteToast
-          note={deletedNote}
-          onUndo={handleUndo}
-          onDismiss={handleDismiss}
-        />
       )}
     </div>
   )

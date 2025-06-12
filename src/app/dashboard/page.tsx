@@ -1,36 +1,41 @@
 'use client'
 
-import NoteCard from '@/components/NoteCard'
-import NoteForm from "@/components/NoteForm"
 import { useNoteStore } from '@/store/noteStore'
 import { useEffect, useState } from 'react'
+import NoteCard from '@/components/NoteCard'
+import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+import { Note } from '@/types'
 
-export default function Page() {
-  const { notes } = useNoteStore()
-  const [isMounted, setIsMounted] = useState(false)
+export default function DashboardPage() {
+  const [mounted, setMounted] = useState(false)
+  const notes = useNoteStore((state) => state.notes)
 
   useEffect(() => {
-    setIsMounted(true)
+    setMounted(true)
   }, [])
 
-  if (!isMounted) {
-    return null // or a loading skeleton
+  if (!mounted) {
+    return null
   }
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <NoteForm />
-      <div className="grid gap-4">
-        {notes.length === 0 ? (
-          <p className='text-sm text-muted-foreground italic'>No notes yet. Start by adding one!</p>
-        ) : (
-          <div className='grid gap-4'> 
-            {notes.map((note) => (
-              <NoteCard key={note.id} note={note} />
-            ))}
-          </div>
-        )}
+    <div className="container mx-auto p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">My Notes</h1>
+        <Link href="/dashboard/new">
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            New Note
+          </Button>
+        </Link>
       </div>
-    </main>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {notes.map((note: Note) => (
+          <NoteCard key={note.id} note={note} />
+        ))}
+      </div>
+    </div>
   )
 }

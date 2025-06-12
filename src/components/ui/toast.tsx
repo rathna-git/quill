@@ -23,11 +23,11 @@ export function Toast({ message, isVisible, className }: ToastProps) {
             damping: 30
           }}
           className={cn(
-            "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999]",
+            "fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none",
             className
           )}
         >
-          <div className="bg-background border border-border shadow-lg rounded-lg p-4 min-w-[320px]">
+          <div className="bg-background border border-border shadow-lg rounded-lg p-4 min-w-[320px] pointer-events-auto">
             <p className="text-foreground text-sm font-medium text-center">{message}</p>
           </div>
         </motion.div>
@@ -58,9 +58,9 @@ export function DeleteToast({ message, subMessage, progress, isVisible, onUndo, 
             stiffness: 500,
             damping: 30
           }}
-          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999]"
+          className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none"
         >
-          <div className="bg-background border border-border shadow-lg rounded-lg p-4 min-w-[320px]">
+          <div className="bg-background border border-border shadow-lg rounded-lg p-4 min-w-[320px] pointer-events-auto">
             <div className="flex flex-col gap-2">
               <div className="flex-1">
                 <p className="text-foreground text-sm font-medium">{message}</p>

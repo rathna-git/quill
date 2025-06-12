@@ -9,7 +9,7 @@ export interface Note {
     id: string;
     /** Title of the note */
     title: string;
-    /** Content/body of the note */
+    /** Content/body of the note in HTML format */
     content: string;
     /** ISO string representing when the note was created */
     createdAt: string;
