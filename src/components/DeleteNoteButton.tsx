@@ -25,13 +25,9 @@ export default function DeleteNoteButton({ noteId, onDelete }: DeleteNoteButtonP
   const { handleDelete } = useDeleteNoteWithConfirm()
 
   const handleDeleteAndNavigate = () => {
-    try {
-      const note = handleDelete(noteId)
-      if (note) {
-        onDelete(note)
-      }
-    } catch (err) {
-      console.error('Failed to delete note:', err)
+    const note = handleDelete(noteId)
+    if (note) {
+      onDelete(note)
     }
   }
 

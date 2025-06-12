@@ -1,10 +1,10 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode, useRef } from 'react'
+import { createContext, useContext, useState, ReactNode, useRef, useEffect } from 'react'
 import { Note } from '@/types'
-import DeleteToast from './DeleteToast'
+import { DeleteToast, Toast } from './ui/toast'
 import { useNoteStore } from '@/store/noteStore'
-import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 interface DeleteToastContextType {
   showDeleteToast: (note: Note) => void
@@ -12,41 +12,71 @@ interface DeleteToastContextType {
 
 const DeleteToastContext = createContext<DeleteToastContextType | undefined>(undefined)
 
-function SuccessToast({ message }: { message: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
-      className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999]"
-    >
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-[320px]">
-        <p className="text-sm font-medium">{message}</p>
-      </div>
-    </motion.div>
-  )
-}
-
 export function DeleteToastProvider({ children }: { children: ReactNode }) {
-  const [deletedNote, setDeletedNote] = useState<Note | null>(null)
   const [showToast, setShowToast] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
+  const [progress, setProgress] = useState(100)
   const isUndoingRef = useRef(false)
-  const addNote = useNoteStore((state) => state.addNote)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const noteToDeleteRef = useRef<Note | null>(null)
+  const router = useRouter()
+  const deleteNote = useNoteStore((state) => state.deleteNote)
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
+    }
+  }, [])
 
   const showDeleteToast = (note: Note) => {
-    setDeletedNote(note)
+    // Clear any existing timer
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+    }
+
+    noteToDeleteRef.current = note
     setShowToast(true)
+    setProgress(100)
     isUndoingRef.current = false
+
+    // Start progress bar
+    const start = Date.now()
+    const duration = 5000 // 5 seconds
+
+    timerRef.current = setInterval(() => {
+      const elapsed = Date.now() - start
+      const remaining = Math.max(0, 100 - (elapsed / duration) * 100)
+      setProgress(remaining)
+      
+      if (elapsed >= duration) {
+        if (timerRef.current) {
+          clearInterval(timerRef.current)
+        }
+        // Only delete and navigate when timer runs out
+        if (noteToDeleteRef.current && !isUndoingRef.current) {
+          deleteNote(noteToDeleteRef.current.id)
+          setShowToast(false)
+          noteToDeleteRef.current = null
+          router.push('/dashboard')
+        }
+      }
+    }, 20)
   }
 
-  const handleUndo = (note: Note) => {
+  const handleUndo = () => {
+    // Clear the timer when undoing
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+
     isUndoingRef.current = true
     setShowToast(false)
-    addNote(note)
-    setDeletedNote(null)
+    noteToDeleteRef.current = null
     setSuccessMessage('Note restored successfully')
     setShowSuccess(true)
     setTimeout(() => {
@@ -56,30 +86,37 @@ export function DeleteToastProvider({ children }: { children: ReactNode }) {
   }
 
   const handleDismiss = () => {
-    if (!isUndoingRef.current) {
-      setSuccessMessage('Note deleted successfully')
-      setShowSuccess(true)
-      setTimeout(() => {
-        setShowSuccess(false)
-      }, 2000)
+    // Clear the timer when dismissing
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
     }
-    setShowToast(false)
-    setDeletedNote(null)
+
+    if (!isUndoingRef.current && noteToDeleteRef.current) {
+      deleteNote(noteToDeleteRef.current.id)
+      setShowToast(false)
+      noteToDeleteRef.current = null
+      router.push('/dashboard')
+    }
   }
 
   return (
     <DeleteToastContext.Provider value={{ showDeleteToast }}>
       {children}
-      {showToast && deletedNote && (
+      {showToast && noteToDeleteRef.current && (
         <DeleteToast
-          note={deletedNote}
+          message="Note Deleting..."
+          subMessage="Undo within 5 seconds"
+          progress={progress}
+          isVisible={showToast}
           onUndo={handleUndo}
           onDismiss={handleDismiss}
         />
       )}
-      {showSuccess && (
-        <SuccessToast message={successMessage} />
-      )}
+      <Toast
+        message={successMessage}
+        isVisible={showSuccess}
+      />
     </DeleteToastContext.Provider>
   )
 }

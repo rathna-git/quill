@@ -9,12 +9,10 @@ import { useState } from 'react'
 import EditNoteForm from './EditNoteForm'
 import DeleteNoteButton from './DeleteNoteButton'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
 import { useDeleteToast } from './DeleteToastProvider'
 
 export default function NoteDetail({ note }: { note: Note | undefined }) {
   const [isEditing, setIsEditing] = useState(false)
-  const router = useRouter()
   const { showDeleteToast } = useDeleteToast()
 
   const handleEditComplete = () => {
@@ -24,9 +22,9 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
 
   const handleDelete = (note: Note) => {
     showDeleteToast(note)
-    router.push('/dashboard')
   }
 
+  // If note is not found and not pending delete, show error
   if (!note) {
     return (
       <div className="max-w-2xl mx-auto mt-8 text-red-600 text-sm">
