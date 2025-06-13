@@ -75,7 +75,11 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss"
 
-import content from "@/components/tiptap-templates/simple/data/content.json"
+interface SimpleEditorProps {
+  content: string
+  editable?: boolean
+  onContentChange?: (content: string) => void
+}
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -182,24 +186,16 @@ const MobileToolbarContent = ({
   </>
 )
 
-export function SimpleEditor() {
+export function SimpleEditor({ content, editable = true, onContentChange }: SimpleEditorProps) {
   const isMobile = useMobile()
   const windowSize = useWindowSize()
   const [mobileView, setMobileView] = React.useState<
     "main" | "highlighter" | "link"
   >("main")
   const toolbarRef = React.useRef<HTMLDivElement>(null)
+  const editorRef = React.useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
-    immediatelyRender: false,
-    editorProps: {
-      attributes: {
-        autocomplete: "off",
-        autocorrect: "off",
-        autocapitalize: "off",
-        "aria-label": "Main content area, start typing to enter text.",
-      },
-    },
     extensions: [
       StarterKit,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
@@ -211,7 +207,6 @@ export function SimpleEditor() {
       Typography,
       Superscript,
       Subscript,
-
       Selection,
       ImageUploadNode.configure({
         accept: "image/*",
@@ -223,7 +218,22 @@ export function SimpleEditor() {
       TrailingNode,
       Link.configure({ openOnClick: false }),
     ],
-    content: content,
+    content,
+    editable,
+    editorProps: {
+      attributes: {
+        class: 'prose dark:prose-invert max-w-none focus:outline-none',
+        tabindex: '0',
+      },
+    },
+    onUpdate: ({ editor }) => {
+      if (onContentChange) {
+        const newContent = editor.getHTML()
+        if (newContent !== content) {
+          onContentChange(newContent)
+        }
+      }
+    }
   })
 
   const bodyRect = useCursorVisibility({
@@ -236,6 +246,16 @@ export function SimpleEditor() {
       setMobileView("main")
     }
   }, [isMobile, mobileView])
+
+  React.useEffect(() => {
+    if (editor && editorRef.current) {
+      editorRef.current.focus()
+    }
+  }, [editor])
+
+  if (!editor) {
+    return null
+  }
 
   return (
     <EditorContext.Provider value={{ editor }}>
@@ -263,7 +283,7 @@ export function SimpleEditor() {
         )}
       </Toolbar>
 
-      <div className="content-wrapper">
+      <div className="content-wrapper" ref={editorRef}>
         <EditorContent
           editor={editor}
           role="presentation"

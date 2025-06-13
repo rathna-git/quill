@@ -29,12 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ThemeProvider>
           <ClerkProvider dynamic>
             <DeleteToastProvider>
               <Header />
-              <main>{children}</main>
+              <main className="flex-1 overflow-y-auto">{children}</main>
               <Toaster position="top-center" />
             </DeleteToastProvider>
           </ClerkProvider>

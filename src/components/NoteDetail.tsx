@@ -14,11 +14,9 @@ import { NoteContent } from './NoteContent'
 
 export default function NoteDetail({ note }: { note: Note | undefined }) {
   const [isEditing, setIsEditing] = useState(false)
-  const [localNote, setLocalNote] = useState<Note | undefined>(note)
   const updateNote = useNoteStore((state) => state.updateNote)
 
   const handleUpdate = (updatedNote: Note) => {
-    setLocalNote(updatedNote)
     updateNote(updatedNote.id, {
       title: updatedNote.title,
       content: updatedNote.content
@@ -27,7 +25,7 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
     toast.success('Note updated successfully!')
   }
 
-  if (!localNote) {
+  if (!note) {
     return null
   }
 
@@ -39,18 +37,18 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
 
       {isEditing ? (
         <EditNoteForm 
-          note={localNote} 
+          note={note} 
           onCancel={() => setIsEditing(false)} 
           onUpdate={handleUpdate}
         />
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>{localNote.title}</CardTitle>
-            <CardDescription>{new Date(localNote.createdAt).toLocaleString()}</CardDescription>
+            <CardTitle>{note.title}</CardTitle>
+            <CardDescription>{new Date(note.createdAt).toLocaleString()}</CardDescription>
           </CardHeader>
           <CardContent>
-            <NoteContent content={localNote.content} />
+            <NoteContent content={note.content} />
           </CardContent>
           <CardFooter className="grid grid-flow-col justify-end gap-2">
             <Button
@@ -61,7 +59,7 @@ export default function NoteDetail({ note }: { note: Note | undefined }) {
             >
               <Pencil />
             </Button>
-            <DeleteNoteButton noteId={localNote.id} />
+            <DeleteNoteButton noteId={note.id} />
           </CardFooter>
         </Card>
       )}

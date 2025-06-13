@@ -13,61 +13,26 @@ import {
   Quote
 } from 'lucide-react'
 import styles from '@/styles/editor.module.css'
-import React, { forwardRef, useEffect, useCallback, useRef } from 'react'
-import { debounce } from 'lodash'
+import React, { forwardRef, useEffect } from 'react'
 
 interface SimpleEditorProps {
   content?: string
   editable?: boolean
-  onChange?: (content: string) => void
 }
 
-export const SimpleEditor = forwardRef<{ getContent: () => string }, SimpleEditorProps>(({ content = '', editable = true, onChange }, ref) => {
-  const isDirty = useRef(false)
-  const initialContent = useRef(content)
-
-  // Create a debounced version of onChange
-  const debouncedOnChange = useCallback(
-    debounce((newContent: string) => {
-      if (isDirty.current) {
-        onChange?.(newContent)
-        isDirty.current = false
-      }
-    }, 1000),
-    [onChange]
-  )
-
+export const SimpleEditor = forwardRef<{ getContent: () => string }, SimpleEditorProps>(({ content = '', editable = true }, ref) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: content || '<p></p>',
-    editable,
-    onCreate: ({ editor }) => {
-      initialContent.current = editor.getHTML()
-    },
-    onUpdate: ({ editor }) => {
-      const currentContent = editor.getHTML()
-      if (currentContent !== initialContent.current) {
-        isDirty.current = true
-        debouncedOnChange(currentContent)
-      }
-    }
+    editable
   })
 
   // Update editor content when prop changes
   useEffect(() => {
     if (editor && content !== editor.getHTML()) {
       editor.commands.setContent(content)
-      initialContent.current = content
-      isDirty.current = false
     }
   }, [content, editor])
-
-  // Cleanup debounced function on unmount
-  useEffect(() => {
-    return () => {
-      debouncedOnChange.cancel()
-    }
-  }, [debouncedOnChange])
 
   // Expose a method to get the current content
   React.useImperativeHandle(ref, () => ({
